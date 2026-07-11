@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Exercise #3</title>
+</head>
+
+<body>
+    <div class="js-container"></div>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/chatbot.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+
+        function Counter({ count, setCount }) {
+            function handleClick() {
+                console.log('Clicked!');
+                setCount(count + 1);
+            }
+            return (
+                <button onClick={handleClick}>Clicked {count} {count === 1 ? 'time' : 'times'}</button>
+            );
+        }
+
+        function Reset({ count, setCount }) {
+            function handleClick() {
+                setCount(0);
+            }
+            return (
+                <button onClick={handleClick}>Reset</button>
+            );
+        }
+
+        function App() {
+            const [count, setCount] = React.useState(0);
+            return (
+                <>
+                    <Counter
+                        count={count}
+                        setCount={setCount}
+                    />
+                    <Counter
+                        count={count}
+                        setCount={setCount}
+                    />
+
+                    <Reset
+                        count={count}
+                        setCount={setCount}
+                    />
+                </>
+            );
+        }
+
+        const container = document.querySelector('.js-container');
+        ReactDOM.createRoot(container).render(<App />);
+    </script>
+</body>
+
+</html>
