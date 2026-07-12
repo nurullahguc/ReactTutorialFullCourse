@@ -87,6 +87,16 @@
             background-color: rgb(150, 190, 170);
             cursor: not-allowed;
         }
+
+        .welcome-text {
+            color: gray;
+            text-align: center;
+        }
+
+        .loading-gif {
+            height: 40px;
+            margin: -15px;
+        }
     </style>
 </head>
 
@@ -189,7 +199,7 @@
             );
         }
 
-        function ChatMessage({ message, sender }) {
+        function ChatMessage({ message, sender, image }) {
             return (
                 <div
                     className={
@@ -206,7 +216,10 @@
                     )}
 
                     <div className="chat-message-text">
-                        {message}
+                        {!image && message}
+                        {image && (
+                            <img className="loading-gif" src="https://supersimple.dev/images/loading-spinner.gif" />
+                        )}
                     </div>
 
                     {sender === 'user' && (
@@ -219,17 +232,27 @@
             );
         }
 
-        function ChatMessages({ chatMessages, isLoading }) {
-            const chatMessagesRef = React.useRef(null);
-
+        const useAutoScroll = (dependencies) => {
+            const containerRef = React.useRef(null);
             React.useEffect(() => {
-                const containerElement = chatMessagesRef.current;
+                const containerElement = containerRef.current;
 
                 if (containerElement) {
                     containerElement.scrollTop =
                         containerElement.scrollHeight;
                 }
-            }, [chatMessages, isLoading]);
+            }, dependencies);
+
+            return containerRef;
+        }
+
+
+        function ChatMessages({ chatMessages, isLoading }) {
+
+            const chatMessagesRef = useAutoScroll([
+                chatMessages, isLoading
+            ]);
+
 
             return (
                 <div
@@ -248,6 +271,7 @@
                         <ChatMessage
                             message="Loading..."
                             sender="robot"
+                            image={true}
                         />
                     )}
                 </div>
@@ -255,33 +279,21 @@
         }
 
         function App() {
-            const [chatMessages, setChatMessages] = React.useState([
-                {
-                    message: 'hello chatbot',
-                    sender: 'user',
-                    id: 'id1'
-                },
-                {
-                    message: 'Hello! How can I help you?',
-                    sender: 'robot',
-                    id: 'id2'
-                },
-                {
-                    message: 'can you get me todays date?',
-                    sender: 'user',
-                    id: 'id3'
-                },
-                {
-                    message: 'Today is September 27',
-                    sender: 'robot',
-                    id: 'id4'
-                }
-            ]);
+            const [chatMessages, setChatMessages] = React.useState([]);
 
             const [isLoading, setIsLoading] = React.useState(false);
 
             return (
                 <div className="app-container">
+
+                    {
+                        chatMessages.length === 0
+                            ? (
+                                <p className="welcome-text">Welcome to the chatbot project! Send a message using the textbox below!</p>
+                            )
+                            : ''
+                    }
+
                     <ChatMessages
                         chatMessages={chatMessages}
                         isLoading={isLoading}

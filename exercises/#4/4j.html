@@ -87,6 +87,10 @@
             background-color: rgb(150, 190, 170);
             cursor: not-allowed;
         }
+        .welcome-text{
+            color: gray;
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -255,33 +259,21 @@
         }
 
         function App() {
-            const [chatMessages, setChatMessages] = React.useState([
-                {
-                    message: 'hello chatbot',
-                    sender: 'user',
-                    id: 'id1'
-                },
-                {
-                    message: 'Hello! How can I help you?',
-                    sender: 'robot',
-                    id: 'id2'
-                },
-                {
-                    message: 'can you get me todays date?',
-                    sender: 'user',
-                    id: 'id3'
-                },
-                {
-                    message: 'Today is September 27',
-                    sender: 'robot',
-                    id: 'id4'
-                }
-            ]);
+            const [chatMessages, setChatMessages] = React.useState([]);
 
             const [isLoading, setIsLoading] = React.useState(false);
 
             return (
                 <div className="app-container">
+
+                    {
+                        chatMessages.length === 0
+                            ? (
+                                <p className="welcome-text">Welcome to the chatbot project! Send a message using the textbox below!</p>
+                            )
+                            : ''
+                    }
+
                     <ChatMessages
                         chatMessages={chatMessages}
                         isLoading={isLoading}

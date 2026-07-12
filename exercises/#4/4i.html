@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Exercise #4</title>
+</head>
+
+<style>
+    body{
+        margin: 0;
+    }
+    .counter-buttons {
+        background-color: rgb(25, 135, 84);
+        padding: 12px 15px;
+        color: white;
+        border: none;
+        font-size: 15px;
+        margin-right: 10px;
+
+    }
+    .counter-container{
+        display: flex;
+        align-items: center;
+        background-color: rgb(222,222,222);
+        height: 100vh;
+    }
+</style>
+
+<body>
+    <div class="js-container"></div>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/dayjs.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+
+        const App = () => {
+
+            const [counter, setCounter] = React.useState(0);
+            const counterButtonRef = React.useRef(null);
+            const handleClick = () => {
+                setCounter(counter + 1);
+            }
+            const handleResetButton = () => {
+                setCounter(0);
+            }
+            const handleAutoClickButton = () => {
+                const counterButtonElem = counterButtonRef.current;
+                setInterval(() => {
+                    if (counterButtonRef) {
+                        counterButtonElem.click();
+                    }
+                }, 1000);
+                console.log(counterButtonRef);
+            }
+
+            return (
+                <div className="counter-container">
+                    <button
+                        onClick={handleClick}
+                        ref={counterButtonRef}
+                        className="counter-buttons"
+                    >Clicked {counter} {counter === 1 ? 'time' : 'times'}</button>
+                    <button
+                        onClick={handleResetButton}
+                        className="counter-buttons"
+                    >Reset</button>
+                    <button
+                        onClick={handleAutoClickButton}
+                        className="counter-buttons"
+                    >Auto Click</button>
+                </div>
+            );
+        }
+
+        const container = document.querySelector('.js-container');
+        ReactDOM.createRoot(container).render(<App />);
+    </script>
+</body>
+
+</html>

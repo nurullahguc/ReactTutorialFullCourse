@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Exercise #4</title>
+</head>
+
+<style>
+
+</style>
+
+<body>
+    <div class="js-container"></div>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/dayjs.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+
+        const App = () => {
+
+            const [counter, setCounter] = React.useState(0);
+            const counterButtonRef = React.useRef(null);
+            const handleClick = () => {
+                setCounter(counter + 1);
+            }
+            const handleResetButton = () => {
+                setCounter(0);
+            }
+            const handleAutoClickButton = () => {
+                const counterButtonElem = counterButtonRef.current;
+                setInterval(() => {
+                    if (counterButtonRef) {
+                        counterButtonElem.click();
+                    }
+                }, 1000);
+                console.log(counterButtonRef);
+            }
+
+            return (
+                <>
+                    <button
+                        onClick={handleClick}
+                        ref={counterButtonRef}
+                    >Clicked {counter} {counter === 1 ? 'time' : 'times'}</button>
+                    <button onClick={handleResetButton}>Reset</button>
+                    <button onClick={handleAutoClickButton}>Auto Click</button>
+                </>
+            );
+        }
+
+        const container = document.querySelector('.js-container');
+        ReactDOM.createRoot(container).render(<App />);
+    </script>
+</body>
+
+</html>
