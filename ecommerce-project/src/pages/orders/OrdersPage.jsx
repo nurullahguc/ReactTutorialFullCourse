@@ -1,15 +1,15 @@
 import axios from 'axios';
 import { useState, useEffect, Fragment } from 'react';
-import { Header } from '../components/Header';
+import { Header } from '../../components/Header';
 import './OrdersPage.css'
 import { Link } from 'react-router'
-import BuyAgain from '../assets/images/icons/buy-again.png'
-import CartIcon from "../assets/images/icons/cart-icon.png"
-import SearchIcon from "../assets/images/icons/search-icon.png"
-import LogoWhite from "../assets/images/logo-white.png"
-import MobileLogoWhite from "../assets/images/mobile-logo-white.png"
+import BuyAgain from '../../assets/images/icons/buy-again.png'
+import CartIcon from "../../assets/images/icons/cart-icon.png"
+import SearchIcon from "../../assets/images/icons/search-icon.png"
+import LogoWhite from "../../assets/images/logo-white.png"
+import MobileLogoWhite from "../../assets/images/mobile-logo-white.png"
 import dayjs from 'dayjs';
-import { formatMoney } from '../utils/money';
+import { formatMoney } from '../../utils/money';
 
 export function OrdersPage({ cart }) {
     const [orders, setOrders] = useState([]);
