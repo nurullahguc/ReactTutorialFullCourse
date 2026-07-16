@@ -10,7 +10,7 @@ export function Header({ cart }) {
     let totalQuantity = 0;
 
     
-    if (cart.length > 0)
+    if (cart?.length > 0)
         cart.forEach((cartItem) => {
             totalQuantity += cartItem.quantity;
         });
