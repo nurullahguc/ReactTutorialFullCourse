@@ -14,10 +14,12 @@ import { formatMoney } from '../../utils/money';
 export function OrdersPage({ cart }) {
     const [orders, setOrders] = useState([]);
     useEffect(() => {
-        axios.get('/api/orders?expand=products')
-            .then((response) => {
-                setOrders(response.data);
-            });
+        const fetchOrderData = async () => {
+            const response = await axios.get('/api/orders?expand=products');
+            setOrders(response.data);
+        }
+
+        fetchOrderData();
     }, []);
 
     return (
@@ -88,7 +90,7 @@ export function OrdersPage({ cart }) {
 
                                     {order.products.map((orderProduct) => {
                                         return (
-                                            <Fragment id={orderProduct.product.id}>
+                                            <Fragment key={orderProduct.product.id}>
                                                 <div className="product-image-container">
                                                     <img src={orderProduct.product.image} />
                                                 </div>
