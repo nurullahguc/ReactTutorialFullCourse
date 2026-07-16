@@ -4,22 +4,15 @@ import { Header } from '../components/Header';
 import './HomePage.css'
 import Checkmark from '../assets/images/icons/checkmark.png'
 
-export function HomePage() {
+export function HomePage({ cart }) {
 
     const [products, setProducts] = useState([]);
-    const [cart, setCart] = useState([]);
 
     useEffect(() => {
         axios.get('/api/products')
             .then((response) => {
                 setProducts(response.data)
             });
-
-        axios.get("/api/cart-items")
-            .then((response) => {
-                setCart(response.data);
-
-            })
     }, []);
 
     return (
@@ -29,7 +22,7 @@ export function HomePage() {
 
             <div className="home-page">
                 <div className="products-grid">
-                    { products.map((product) => {
+                    {products.map((product) => {
                         return (
                             <div key={product.id} className="product-container">
                                 <div className="product-image-container">
