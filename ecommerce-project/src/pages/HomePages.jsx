@@ -10,12 +10,12 @@ export function HomePage() {
     const [cart, setCart] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:3000/api/products')
+        axios.get('/products')
             .then((response) => {
                 setProducts(response.data)
             });
 
-        axios.get("http://localhost:3000/api/cart-items")
+        axios.get("/cart-items")
             .then((response) => {
                 setCart(response.data);
 
@@ -29,7 +29,7 @@ export function HomePage() {
 
             <div className="home-page">
                 <div className="products-grid">
-                    {products?.map((product) => {
+                    {products & products.length > 0 && products.map((product) => {
                         return (
                             <div key={product.id} className="product-container">
                                 <div className="product-image-container">
