@@ -35,11 +35,24 @@ export function TrackingPage({ cart }) {
         if (orderProduct && order) {
             const totalDeliveryTimeMs = orderProduct.estimatedDeliveryTimeMs - order.orderTimeMs;
             const timePassedMs = dayjs().valueOf() - order.orderTimeMs;
-            let calculatedPercent  = (timePassedMs / totalDeliveryTimeMs) * 100;
+            let calculatedPercent = (timePassedMs / totalDeliveryTimeMs) * 100;
             const finalDeliveryPercent = Math.min(100, Math.max(0, calculatedPercent));
             setDeliveryPercent(finalDeliveryPercent);
         }
     }, [orderProduct, order]);
+
+    const checkCurrentStatus = (progress) => {
+        switch (progress) {
+            case 'preparing':
+                return deliveryPercent < 33;
+            case 'shipped':
+                return deliveryPercent >= 33 && deliveryPercent < 100;
+            case 'delivered':
+                return deliveryPercent === 100;
+            default:
+                break;
+        }
+    }
 
     return (
         <>
@@ -70,13 +83,13 @@ export function TrackingPage({ cart }) {
                             <img className="product-image" src={orderProduct.product.image} />
 
                             <div className="progress-labels-container">
-                                <div className="progress-label">
+                                <div className={`progress-label ${checkCurrentStatus('preparing') && 'current-status'}`}>
                                     Preparing
                                 </div>
-                                <div className="progress-label current-status">
+                                <div className={`progress-label ${checkCurrentStatus('shipped') && 'current-status'}`}>
                                     Shipped
                                 </div>
-                                <div className="progress-label">
+                                <div className={`progress-label ${checkCurrentStatus('delivered') && 'current-status'}`}>
                                     Delivered
                                 </div>
                             </div>
