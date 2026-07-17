@@ -21,6 +21,13 @@ export function CartItemDetails({ cartItem, loadCart }) {
     const handleQuantityTextBoxChange = (e) => {
         setQuantity(Number(e.target.value))
     }
+    const handleQuatityextBoxKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            handleUpdate();
+        } else if (e.key === 'Escape') {
+                setShowQuantityTextBox(false)
+        }
+    }
 
     return (
         <>
@@ -45,6 +52,7 @@ export function CartItemDetails({ cartItem, loadCart }) {
                                 type="text"
                                 value={quantity}
                                 onChange={handleQuantityTextBoxChange}
+                                onKeyDown={handleQuatityextBoxKeyDown}
                             />
                         )}
                         {!showQuantityTextBox && (
