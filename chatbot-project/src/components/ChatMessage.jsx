@@ -4,7 +4,7 @@ import './ChatMessage.css'
 import dayjs from 'dayjs'
 
 
-console.log(UserProfileImage);
+//console.log(UserProfileImage);
 
 
 export function ChatMessage({ message, sender, createdAt, isLoading }) {

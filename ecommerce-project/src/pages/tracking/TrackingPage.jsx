@@ -12,7 +12,7 @@ export function TrackingPage({ cart }) {
     const [orderProduct, setOrderProduct] = useState(null);
     const [deliveryPercent, setDeliveryPercent] = useState(null);
     const { orderId, productId } = useParams();
-    console.log(orderId, productId);
+    //console.log(orderId, productId);
 
     useEffect(() => {
         const fetchTrackingData = async () => {
