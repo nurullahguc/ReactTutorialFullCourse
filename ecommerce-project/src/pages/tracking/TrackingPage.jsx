@@ -9,7 +9,8 @@ import dayjs from "dayjs";
 
 export function TrackingPage({ cart }) {
     const [order, setOrder] = useState(null);
-    const [product, setProduct] = useState(null);
+    const [orderProduct, setOrderProduct] = useState(null);
+    const [deliveryPercent, setDeliveryPercent] = useState(null);
     const { orderId, productId } = useParams();
     console.log(orderId, productId);
 
@@ -23,18 +24,28 @@ export function TrackingPage({ cart }) {
     }, [orderId]);
 
     useEffect(() => {
-        const findProduct = order?.products.find((productItem) => {
+        const findOrderProduct = order?.products.find((productItem) => {
             return productItem.productId === productId;
         })
-        console.log("findProduct", findProduct);
+        //console.log("findOrderProduct", findOrderProduct);
+        setOrderProduct(findOrderProduct);
+    }, [order, productId]);
 
-        setProduct(findProduct);
-    }, [order]);
+    useEffect(() => {
+        if (orderProduct && order) {
+            const totalDeliveryTimeMs = orderProduct.estimatedDeliveryTimeMs - order.orderTimeMs;
+            const timePassedMs = dayjs().valueOf() - order.orderTimeMs;
+            let calculatedPercent  = (timePassedMs / totalDeliveryTimeMs) * 100;
+            const finalDeliveryPercent = Math.min(100, Math.max(0, calculatedPercent));
+            setDeliveryPercent(finalDeliveryPercent);
+        }
+    }, [orderProduct, order]);
 
     return (
         <>
             <title>Tracking</title>
             <Header cart={cart} />
+
 
             <div className="tracking-page">
                 <div className="order-tracking">
@@ -42,21 +53,21 @@ export function TrackingPage({ cart }) {
                         View all orders
                     </Link>
 
-                    {product && (
+                    {orderProduct && (
                         <>
                             <div className="delivery-date">
-                                Arriving on {dayjs(product.estimatedDeliveryTimeMs).format('dddd, MMMM D')}
+                                Arriving on {dayjs(orderProduct.estimatedDeliveryTimeMs).format('dddd, MMMM D')}
                             </div>
 
                             <div className="product-info">
-                                {product.product.name}
+                                {orderProduct.product.name}
                             </div>
 
                             <div className="product-info">
-                                Quantity: {product.quantity}
+                                Quantity: {orderProduct.quantity}
                             </div>
 
-                            <img className="product-image" src={product.product.image} />
+                            <img className="product-image" src={orderProduct.product.image} />
 
                             <div className="progress-labels-container">
                                 <div className="progress-label">
@@ -71,7 +82,7 @@ export function TrackingPage({ cart }) {
                             </div>
 
                             <div className="progress-bar-container">
-                                <div className="progress-bar"></div>
+                                <div style={{ width: `${deliveryPercent}%` }} className="progress-bar"></div>
                             </div>
                         </>
                     )}
