@@ -9,7 +9,7 @@ import LogoWhite from "../../assets/images/logo-white.png"
 import MobileLogoWhite from "../../assets/images/mobile-logo-white.png"
 import { OrdersGrid } from './OrdersGrid';
 
-export function OrdersPage({ cart }) {
+export function OrdersPage({ cart, loadCart }) {
     const [orders, setOrders] = useState([]);
     useEffect(() => {
         const fetchOrderData = async () => {
@@ -24,42 +24,11 @@ export function OrdersPage({ cart }) {
         <>
             <title>Orders</title>
             <Header cart={cart} />
-            <div className="header">
-                <div className="left-section">
-                    <Link to="/" className="header-link">
-                        <img className="logo"
-                            src={LogoWhite} />
-                        <img className="mobile-logo"
-                            src={MobileLogoWhite} />
-                    </Link>
-                </div>
-
-                <div className="middle-section">
-                    <input className="search-bar" type="text" placeholder="Search" />
-
-                    <button className="search-button">
-                        <img className="search-icon" src={SearchIcon} />
-                    </button>
-                </div>
-
-                <div className="right-section">
-                    <Link className="orders-link header-link" to="/orders">
-
-                        <span className="orders-text">Orders</span>
-                    </Link>
-
-                    <Link className="cart-link header-link" to="/checkout">
-                        <img className="cart-icon" src={CartIcon} />
-                        <div className="cart-quantity">3</div>
-                        <div className="cart-text">Cart</div>
-                    </Link>
-                </div>
-            </div>
 
             <div className="orders-page">
                 <div className="page-title">Your Orders</div>
 
-                <OrdersGrid orders={orders} />
+                <OrdersGrid orders={orders} loadCart={loadCart} />
             </div>
         </>
     );

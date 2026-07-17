@@ -3,19 +3,27 @@ import BuyAgain from '../../assets/images/icons/buy-again.png'
 import { Fragment } from "react";
 import { Link } from "react-router";
 import { OrderHeader } from "./OrderHeader";
+import axios from "axios";
 
-export function OrdersGrid({ orders }) {
+export function OrdersGrid({ orders, loadCart }) {
     return (
         <div className="orders-grid">
             {orders.map((order) => {
                 return (
-                    <div key={order.id} className="order-container">
+                    <div key={order.id} className="order-container" >
 
                         <OrderHeader order={order} />
 
                         <div className="order-details-grid">
 
                             {order.products.map((orderProduct) => {
+                                const addToCart = async () => {
+                                    await axios.post('/api/cart-items', {
+                                        productId: orderProduct.product.id,
+                                        quantity: 1,
+                                    });
+                                    await loadCart();
+                                }
                                 return (
                                     <Fragment key={orderProduct.product.id}>
                                         <div className="product-image-container">
@@ -31,7 +39,7 @@ export function OrdersGrid({ orders }) {
                                             <div className="product-quantity">
                                                 Quantity: {orderProduct.quantity}
                                             </div>
-                                            <button className="buy-again-button button-primary">
+                                            <button onClick={addToCart} className="buy-again-button button-primary">
                                                 <img className="buy-again-icon" src={BuyAgain} />
                                                 <span className="buy-again-message">Add to Cart</span>
                                             </button>
@@ -50,6 +58,6 @@ export function OrdersGrid({ orders }) {
                     </div>
                 );
             })}
-        </div>
+        </div >
     );
 }
