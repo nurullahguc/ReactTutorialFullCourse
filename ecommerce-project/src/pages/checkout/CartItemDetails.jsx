@@ -4,12 +4,16 @@ import { useState } from "react";
 
 export function CartItemDetails({ cartItem, loadCart }) {
     const [showQuantityTextBox, setShowQuantityTextBox] = useState(false);
+    const [quantity, setQuantity] = useState(cartItem.quantity);
     const deleteCartItem = async () => {
         await axios.delete('/api/cart-items/' + cartItem.productId)
         await loadCart();
     }
     const handleUpdate = () => {
         setShowQuantityTextBox(!showQuantityTextBox);
+    }
+    const handleQuantityTextBoxChange = (e) => {
+            setQuantity(e.target.value)
     }
 
     return (
@@ -33,6 +37,8 @@ export function CartItemDetails({ cartItem, loadCart }) {
                             <input
                                 className="quantity-input"
                                 type="text"
+                                value={quantity}
+                                onChange={handleQuantityTextBoxChange}
                             />
                         )}
                         {!showQuantityTextBox && (
