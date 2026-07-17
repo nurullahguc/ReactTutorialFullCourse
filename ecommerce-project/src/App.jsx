@@ -15,7 +15,7 @@ function App() {
       const response = await axios.get("/api/cart-items?expand=product");
       setCart(response.data);
     }
-    
+
     fetchAppData();
   }, []);
 
@@ -27,7 +27,7 @@ function App() {
         <Route path="orders" element={<OrdersPage cart={cart} />} />
         <Route path="tracking/:orderId/:productId" element={<TrackingPage cart={cart} />} />
 
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<NotFound cart={cart} />} />
       </Routes>
     </>
   )
