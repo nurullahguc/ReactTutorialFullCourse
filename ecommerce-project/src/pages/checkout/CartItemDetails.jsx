@@ -9,11 +9,17 @@ export function CartItemDetails({ cartItem, loadCart }) {
         await axios.delete('/api/cart-items/' + cartItem.productId)
         await loadCart();
     }
-    const handleUpdate = () => {
+    const handleUpdate = async () => {
+        if (showQuantityTextBox) {
+            await axios.put("/api/cart-items/" + cartItem.product.id, {
+                quantity
+            })
+            await loadCart();
+        }
         setShowQuantityTextBox(!showQuantityTextBox);
     }
     const handleQuantityTextBoxChange = (e) => {
-            setQuantity(e.target.value)
+        setQuantity(Number(e.target.value))
     }
 
     return (
