@@ -4,12 +4,21 @@ import CartIcon from "../assets/images/icons/cart-icon.png"
 import SearchIcon from "../assets/images/icons/search-icon.png"
 import LogoWhite from "../assets/images/logo-white.png"
 import MobileLogoWhite from "../assets/images/mobile-logo-white.png"
-import { useState } from 'react'
-import { useNavigate } from 'react-router'
+import { useEffect, useState } from 'react'
+import { useNavigate, useSearchParams } from 'react-router'
 
 export function Header({ cart }) {
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const serachFromUrl = searchParams.get('search');
     const [search, setSearch] = useState('');
+    useEffect(() => {
+        if (serachFromUrl) {
+            setSearch(serachFromUrl);
+        } else {
+            setSearch('');
+        }
+    }, [serachFromUrl]);
     let totalQuantity = 0;
     if (cart?.length > 0)
         cart.forEach((cartItem) => {
