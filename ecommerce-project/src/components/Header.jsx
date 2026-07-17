@@ -5,8 +5,10 @@ import SearchIcon from "../assets/images/icons/search-icon.png"
 import LogoWhite from "../assets/images/logo-white.png"
 import MobileLogoWhite from "../assets/images/mobile-logo-white.png"
 import { useState } from 'react'
+import { useNavigate } from 'react-router'
 
 export function Header({ cart }) {
+    const navigate = useNavigate();
     const [search, setSearch] = useState('');
     let totalQuantity = 0;
     if (cart?.length > 0)
@@ -15,7 +17,7 @@ export function Header({ cart }) {
         });
     const handleSearch = () => {
         console.log(search);
-        
+        navigate(`/?search=${search}`)
     }
     const handleSearchChange = (e) => {
         setSearch(e.target.value);
