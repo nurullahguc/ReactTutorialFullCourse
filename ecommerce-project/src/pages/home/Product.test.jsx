@@ -63,4 +63,11 @@ describe('Product compnent', () => {
         );
         expect(loadCart).toHaveBeenCalled();
     });
+
+    it('selects a quantity', () => {
+        render(<Product product={product} loadCart={loadCart} />);
+
+        const quantitySelector = screen.getByTestId('product-quantity-selector');
+        expect(quantitySelector).toHaveValue('1');
+    });
 });
