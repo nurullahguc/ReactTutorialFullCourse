@@ -83,6 +83,5 @@ describe('Product compnent', () => {
             quantity: 3,
         });
         expect(loadCart).toHaveBeenCalled();
-
     });
 });
