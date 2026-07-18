@@ -22,7 +22,7 @@ describe('Product compnent', () => {
             priceCents: 1090,
             keywords: ["socks", "sports", "apparel"]
         };
-        loadCart = vi.fn();
+        
     });
 
     it('displays the product details correctly', () => {
