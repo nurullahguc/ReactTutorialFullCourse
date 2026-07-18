@@ -7,11 +7,14 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-          target: 'http://localhost:3000'
+        target: 'http://localhost:3000'
       },
       '/images': {
         target: 'http://localhost:3000'
       }
     }
+  },
+  build: {
+    outDir: '../ecommerce-backend/dist'
   }
 })
